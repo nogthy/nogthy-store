@@ -13,7 +13,18 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-card/80 p-5 transition-all duration-300 hover:border-purple-500/40 hover:glow-purple hover:bg-card">
         {discount && <Badge className="absolute top-3 right-3 z-10 bg-green-600 text-white border-0 text-xs px-2 py-0.5">-{discount}%</Badge>}
         <div className="flex items-start gap-4">
-          <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${product.logo_gradient} text-white font-bold text-xl shadow-lg transition-transform duration-300 group-hover:scale-110`}>{product.logo_icon}</div>
+          <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${product.logo_gradient} text-white font-bold text-xl shadow-lg transition-transform duration-300 group-hover:scale-110 overflow-hidden`}>
+            {(product as any).image_url ? (
+              <img
+                src={(product as any).image_url}
+                alt={product.name}
+                className="w-10 h-10 object-contain"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+              />
+            ) : (
+              product.logo_icon
+            )}
+          </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-foreground group-hover:text-purple-300 transition-colors truncate">{product.name}</h3>
             <p className="text-xs text-muted-foreground mt-0.5">{product.duration}</p>
